@@ -54,14 +54,19 @@ public class MainActivity extends Activity {
             while(active) {
                 try {
                     Calendar cal = Calendar.getInstance(Locale.GERMANY);
-                    String colorString = "#" + sdf.format(cal.getTime());
-                    System.out.println("setting background:"+colorString);
-                    clockView.setBackgroundColor(Color.parseColor(colorString));
-                    System.out.println("setting text code");
-                    clockString.setText(colorString);
+                    final String colorString = "#" + sdf.format(cal.getTime());
+                    runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							clockView.setBackgroundColor(Color.parseColor(colorString));
+		                    clockString.setText(colorString);
+						}
+                    	
+                    });
+                    
                     System.out.println("Sleeping for 1 s");
                     Thread.sleep(1000);
-                } catch (Exception e) { 
+                } catch (Exception e) {
                     System.out.println(e);
                 }
             }
